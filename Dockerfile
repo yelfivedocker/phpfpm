@@ -1,5 +1,5 @@
-FROM: php-fpm:7.2.3
-MAINTAINER: Felix Huang <yelfivehuang@gmail.com>
+FROM php:7.2.3-fpm
+LABEL maintaner="yelfivehuang@gmail.com"
 
 RUN apt-get update && apt-get install -y \
 		libfreetype6-dev \
