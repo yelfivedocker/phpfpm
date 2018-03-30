@@ -8,4 +8,10 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install pdo_mysql
+    && docker-php-ext-install pdo_mysql zip
+
+# install composer
+RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/bin/composer
