@@ -15,3 +15,8 @@ RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.ph
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/bin/composer
+
+# install yaml ext
+RUN apt-get install -y libyaml-dev \
+    && printf "\n" | pecl install yaml \
+    && echo 'extension=yaml.so' > /usr/local/etc/php/conf.d/yaml.ini
