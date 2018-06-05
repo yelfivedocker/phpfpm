@@ -1,22 +1,16 @@
-FROM php:7.2.3-fpm
+FROM yelfive/phpfpm-automated:7.2.3-1
 LABEL maintaner="yelfivehuang@gmail.com"
 
-RUN apt-get update && apt-get install -y \
-        apt-utils \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install pdo_mysql zip
+RUN curl -O https://xdebug.org/files/xdebug-2.6.0.tgz \
+    && tar -zxf xdebug-2.6.0.tgz \
+    && cd xdebug-2.6.0 \
+    && phpize \
+    && ./configure \
+    && make \
+    && cp ./.libs/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-`phpize -v | head -n 2| tail -n 1|awk '{print $4}'`/ \
+    && cd .. && rm -rf xdebug-2.6.0 \
+    # Using `xdebug` inside container to start debug session.
+    && echo alias "export xdebug='export XDEBUG_CONFIG=\"remote_enable=1 remote_mode=req remote_port=9000 remote_host=10.254.254.254 remote_connect_back=0\" PHP_IDE_CONFIG=\"serverName=localhost\"'" >> ~/.bashrc
 
-# install composer
-RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/bin/composer
-
-# install yaml ext
-RUN apt-get install -y libyaml-dev \
-    && printf "\n" | pecl install yaml \
-    && echo 'extension=yaml.so' > /usr/local/etc/php/conf.d/yaml.ini
+# Copy ini file but do not load it
+COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini.disabled
