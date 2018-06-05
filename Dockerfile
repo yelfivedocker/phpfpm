@@ -8,7 +8,7 @@ RUN curl -O https://xdebug.org/files/xdebug-2.6.0.tgz \
     && ./configure \
     && make \
     && cp ./.libs/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-`phpize -v | head -n 2| tail -n 1|awk '{print $4}'`/ \
-    && cd .. && rm -rf xdebug-2.6.0 \
+    && cd .. && rm -rf xdebug-2.6.0* package.xml \
     # Using `xdebug` inside container to start debug session.
     && echo alias "export xdebug='export XDEBUG_CONFIG=\"remote_enable=1 remote_mode=req remote_port=9000 remote_host=10.254.254.254 remote_connect_back=0\" PHP_IDE_CONFIG=\"serverName=localhost\"'" >> ~/.bashrc
 
