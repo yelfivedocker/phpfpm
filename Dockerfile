@@ -27,3 +27,5 @@ COPY --from=grpc /usr/local/bin/protoc /usr/local/bin/protoc
 COPY --from=grpc /usr/local/include/protobuf /usr/local/include/google/protobuf
 # grpc_php_plugin
 COPY --from=grpc /usr/local/bin/grpc_php_plugin /usr/local/bin/grpc_php_plugin
+# composer
+COPY --from=grpc /usr/bin/composer /usr/local/bin/composer
