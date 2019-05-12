@@ -9,7 +9,7 @@ COPY --from=xdebug /usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebu
 COPY --from=xdebug /usr/local/etc/php/conf.d/xdebug.ini.disabled /usr/local/etc/php/conf.d/xdebug.ini.disabled
 # pdo_mysql.so
 COPY --from=grpc /usr/local/lib/php/extensions/no-debug-non-zts-20170718/pdo_mysql.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/pdo_mysql.so
-RUN RUN echo extension=pdo_mysql.so > /usr/local/etc/php/conf.d/pdo_mysql.ini
+RUN echo extension=pdo_mysql.so > /usr/local/etc/php/conf.d/pdo_mysql.ini
 # zip.so
 # installed, disabled
 COPY --from=grpc /usr/local/lib/php/extensions/no-debug-non-zts-20170718/zip.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/zip.so
