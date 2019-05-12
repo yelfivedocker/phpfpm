@@ -8,6 +8,8 @@ This repository contains PHP-fpm with extra extensions pre-compiled:
 4. protobuf
 5. xdebug: _installed, disabled_
 6. yaml: _installed, disabled_
+7. gd
+8. iconv
 
 ## Usage
 

@@ -30,3 +30,12 @@ COPY --from=grpc /usr/local/include/protobuf /usr/local/include/google/protobuf
 COPY --from=grpc /usr/local/bin/grpc_php_plugin /usr/local/bin/grpc_php_plugin
 # composer
 COPY --from=grpc /usr/bin/composer /usr/local/bin/composer
+
+# iconv gd
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+    && docker-php-ext-install -j$(nproc) iconv \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
