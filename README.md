@@ -11,4 +11,4 @@ This repository contains PHP-fpm with extra extensions pre-compiled:
 
 ## Usage
 
-See [Usage][./USAGE.md]
+See [Usage](./USAGE.md)
