@@ -32,10 +32,13 @@ COPY --from=grpc /usr/local/bin/grpc_php_plugin /usr/local/bin/grpc_php_plugin
 COPY --from=grpc /usr/bin/composer /usr/local/bin/composer
 
 # iconv gd
-RUN apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-    && docker-php-ext-install -j$(nproc) iconv \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd \
+RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev && \
+    docker-php-ext-configure gd \
+        --with-gd \
+        --with-freetype-dir=/usr/include/ \
+        --with-png-dir=/usr/include/ \
+        --with-jpeg-dir=/usr/include/ && \
+    NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
+    docker-php-ext-install -j${NPROC} gd && \
+    docker-php-ext-install -j$(nproc) iconv && \
+    apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
