@@ -1,5 +1,7 @@
 # PHP-fpm as needed
 
+Based on `lv2`, adds some extensions
+
 This repository contains PHP-fpm with extra extensions pre-compiled:
 
 1. pdo_mysql
@@ -10,6 +12,10 @@ This repository contains PHP-fpm with extra extensions pre-compiled:
 6. yaml: _installed, disabled_
 7. gd
 8. iconv
+
+Newly added:
+
+1. soap, _disabled_
 
 ## Usage
 
