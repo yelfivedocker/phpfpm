@@ -1,9 +1,6 @@
-FROM yelfive/phpfpm:lv2-1.0
+FROM yelfive/phpfpm:full AS full
+FROM yelfive/phpfpm:lv3-1.0
 LABEL maintaner="yelfivehuang@gmail.com"
 
-RUN apk update  \
-    && apk add libxml2-dev \
-    && docker-php-ext-install soap
-
-# Disable soap as it's an old-fashioned protocol
-RUN rm /usr/local/etc/php/conf.d/docker-php-ext-soap.ini
+COPY --from=full /usr/local/lib/php/extensions/no-debug-non-zts-20170718/mongodb.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/mongodb.so
+RUN echo extension=mongodb.so > /usr/local/etc/php/conf.d/mongodb.ini.disabled

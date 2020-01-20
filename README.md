@@ -12,6 +12,7 @@ This repository contains PHP-fpm with extra extensions pre-compiled:
 6. yaml: _installed, disabled_
 7. gd
 8. iconv
+9. mongodb _installed, disabled_
 
 Newly added:
 
